@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Bomber</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SMS Bomber</h1>
+        <div class="input-group">
+            <label for="phone">Enter your phone number</label>
+            <input type="text" id="phone" name="phone">
+        </div>
+        <div class="input-group">
+            <label for="amount">Enter the amount</label>
+            <input type="number" id="amount" name="amount">
+        </div>
+        <div class="input-group">
+            <label for="cooldown">Enter the cooldown (per second)</label>
+            <input type="number" id="cooldown" name="cooldown">
+        </div>
+        <button class="button" onclick="startBombing()">Start Bombing</button>
+        <div id="response" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function startBombing() {
+            const phone = document.getElementById('phone').value;
+            const amount = document.getElementById('amount').value;
+            const cooldown = document.getElementById('cooldown').value;
+            const responseDiv = document.getElementById('response');
+
+            if (phone === '' || amount === '' || cooldown === '') {
+                responseDiv.innerHTML = 'Please fill out all fields';
+                return;
+            }
+
+            fetch(`https://deku-rest-api-3ijr.onrender.com/smsb?number=${phone}&amount=${amount}&delay=${cooldown}`)
+                .then(response => response.json())
+                .then(data => {
+                    responseDiv.innerHTML = 'SMS bombing started!';
+                })
+                .catch(error => {
+                    responseDiv.innerHTML = 'Error starting SMS bombing';
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
