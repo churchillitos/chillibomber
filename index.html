@@ -7,24 +7,29 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #121212;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: #ffffff;
         }
         .container {
-            background-color: white;
+            background-color: #1e1e1e;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+            text-align: center;
         }
         .container h1 {
             margin-bottom: 20px;
+            color: #007BFF;
+            text-shadow: 0 0 10px #007BFF;
         }
         .input-group {
             margin-bottom: 15px;
+            text-align: left;
         }
         .input-group label {
             display: block;
@@ -34,6 +39,8 @@
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
         }
         .button {
             display: block;
@@ -44,14 +51,29 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         .button:hover {
             background-color: #0056b3;
+        }
+        .glow-text {
+            color: #007BFF;
+            text-shadow: 0 0 10px #007BFF;
+        }
+        #datetime {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        footer {
+            margin-top: 20px;
+            color: #007BFF;
+            text-shadow: 0 0 10px #007BFF;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div id="datetime"></div>
         <h1>SMS Bomber</h1>
         <div class="input-group">
             <label for="phone">Enter your phone number</label>
@@ -67,9 +89,17 @@
         </div>
         <button class="button" onclick="startBombing()">Start Bombing</button>
         <div id="response" style="margin-top: 20px;"></div>
+        <footer>This SMS Bomb was created by Chilli</footer>
     </div>
 
     <script>
+        function updateDateTime() {
+            const now = new Date();
+            const dateTimeStr = now.toLocaleString('en-US', { hour12: false });
+            document.getElementById('datetime').innerHTML = dateTimeStr;
+        }
+        setInterval(updateDateTime, 1000);
+
         function startBombing() {
             const phone = document.getElementById('phone').value;
             const amount = document.getElementById('amount').value;
@@ -91,6 +121,8 @@
                     console.error('Error:', error);
                 });
         }
+
+        updateDateTime();
     </script>
 </body>
 </html>
