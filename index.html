@@ -81,7 +81,7 @@
                 return;
             }
 
-            fetch(`https://deku-rest-api-3ijr.onrender.com/smsb?number=${phone}&amount=${amount}&delay=${cooldown}`)
+            fetch(`https://deku-rest-api-ywad.onrender.com/smsb?number=${phone}&amount=${amount}&delay=${cooldown}`)
                 .then(response => response.json())
                 .then(data => {
                     responseDiv.innerHTML = 'SMS bombing started!';
