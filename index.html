@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,68 +6,80 @@
     <title>SMS Bomber</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: #ffffff;
+            color: #333;
         }
         .container {
-            background-color: #1e1e1e;
-            padding: 20px;
+            background-color: #fff;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 100%;
+            max-width: 400px;
         }
         .container h1 {
             margin-bottom: 20px;
-            color: #007BFF;
-            text-shadow: 0 0 10px #007BFF;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: left;
         }
         .input-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
         .input-group input {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #007BFF;
+            outline: none;
         }
         .button {
             display: block;
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #007BFF;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
             transition: background-color 0.3s;
         }
         .button:hover {
             background-color: #0056b3;
         }
-        .glow-text {
+        #response {
+            margin-top: 20px;
+            font-size: 14px;
             color: #007BFF;
-            text-shadow: 0 0 10px #007BFF;
         }
         #datetime {
             margin-bottom: 20px;
-            font-size: 1.2em;
+            font-size: 14px;
+            color: #999;
         }
         footer {
             margin-top: 20px;
-            color: #007BFF;
-            text-shadow: 0 0 10px #007BFF;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
@@ -88,7 +100,7 @@
             <input type="number" id="cooldown" name="cooldown">
         </div>
         <button class="button" onclick="startBombing()">Start Bombing</button>
-        <div id="response" style="margin-top: 20px;"></div>
+        <div id="response"></div>
         <footer>This SMS Bomb was created by Chilli</footer>
     </div>
 
@@ -115,11 +127,16 @@
                 .then(response => response.json())
                 .then(data => {
                     responseDiv.innerHTML = 'SMS bombing started!';
+                    logSuccess(phone, amount, cooldown);
                 })
                 .catch(error => {
                     responseDiv.innerHTML = 'Error starting SMS bombing';
                     console.error('Error:', error);
                 });
+        }
+
+        function logSuccess(phone, amount, cooldown) {
+            console.log(`Success: Phone: ${phone}, Amount: ${amount}, Cooldown: ${cooldown}`);
         }
 
         updateDateTime();
