@@ -26,7 +26,7 @@ app.get('/events', (req, res) => {
 });
 
 async function bomb(phone) {
-    const url = "https://9f8rj0jed1.execute-api.us-east-1.amazonaws.com/api/v2/sendOTP";
+    const url = "YOUR_API_ENDPOINT"; // Replace with your actual API endpoint
     const payload = {
         dial_code: "+63",
         phone: phone,
