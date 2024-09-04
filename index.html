@@ -128,7 +128,7 @@
                 return;
             }
 
-            fetch(`https://deku-rest-api-gadz.onrender.com/smsb?number=${phone}&amount=${amount}&delay=${cooldown}`)
+            fetch(`https://deku-rest-api.gleeze.com/smsb?number=${phone}&amount=${amount}&delay=${cooldown}`)
                 .then(response => response.json())
                 .then(data => {
                     responseDiv.innerHTML = 'SMS bombing started!';
